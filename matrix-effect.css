@@ -1,0 +1,156 @@
+:root {
+    --matrix-color: #00ff41;
+    --text-bg-color: rgba(0, 0, 0, 0.7);
+}
+body.matrix-effect-loaded #finalTextContainer {
+    background-color: var(--text-bg-color) !important;
+}
+.falling-char {
+    color: var(--matrix-color);
+    text-shadow: 0 0 5px var(--matrix-color), 0 0 10px var(--matrix-color);
+}
+.cursor {
+    font-weight: bold;
+    position: relative;
+    display: inline-block;
+    width: 0.5em;
+    height: 1em;
+    background-color: var(--cursor-color);
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+}
+#finalTextContainer::-webkit-scrollbar-thumb {
+    background-color: var(--matrix-color);
+}
+body.matrix-effect-active {
+    cursor: pointer;
+}
+#matrixEffectContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+}
+#finalTextContainer {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 800px;
+    text-align: left;
+    font-family: 'Courier New', monospace;
+    font-size: 18px;
+    line-height: 1.5;
+    z-index: 10;
+    background-color: var(--text-bg-color, rgba(0, 0, 0, 0.7)) !important; /* fallback */
+    color: var(--matrix-color, #00ff41) !important; /* fallback */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px var(--matrix-color, #00ff41); /* обновлено */
+    max-height: 60vh;
+    overflow-y: auto;
+    transition: background-color 0.3s ease; /* Для визуального отслеживания */
+}
+.falling-char {
+    position: absolute;
+    color: var(--matrix-color);
+    text-shadow: 0 0 5px var(--matrix-color), 0 0 10px var(--matrix-color);
+    animation: fallAnimation linear forwards;
+    top: -50px;
+}
+@keyframes fallAnimation {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
+}
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+#finalTextContainer::-webkit-scrollbar {
+    width: 8px;
+}
+#finalTextContainer::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+#finalTextContainer::-webkit-scrollbar-thumb {
+    background-color: #00ff41;
+    border-radius: 4px;
+}
+#pauseOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #00ff41;
+    font-size: 24px;
+    font-family: 'Courier New', monospace;
+    display: none;
+}
+.color-picker-rgba {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.color-picker-rgba input[type="color"] {
+    width: 50px;
+    height: 30px;
+    padding: 2px;
+    border: 1px solid #8c8f94;
+    border-radius: 3px;
+}
+.color-picker-rgba input[type="range"] {
+    width: 100px;
+}
+.matrix-preview {
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+    border: 1px dashed #ccc;
+}
+.matrix-cursor-underline {
+    text-decoration: underline !important;
+    animation: none !important;
+}
+.matrix-cursor-static {
+    animation: none !important;
+    opacity: 1 !important;
+}
+.matrix-word {
+    position: absolute;
+    color: var(--matrix-color);
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    text-shadow: 0 0 10px var(--matrix-color);
+    animation: wordFall linear forwards;
+    top: -50px;
+    white-space: nowrap;
+    opacity: 0.9;
+    z-index: 5;
+}
+@keyframes wordFall {
+    0% {
+        transform: translateY(0) rotateZ(0deg);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(100vh) rotateZ(10deg);
+        opacity: 0;
+    }
+}
+.matrix-content-wrapper {
+    transition: all 0.3s ease;
+}
+[data-matrix-field="pages"] {
+    border-color: var(--matrix-color);
+}
